@@ -71,6 +71,7 @@ app.use(requestLogger);
 // CORS configuration
 const allowedOrigins = [
   process.env.CLIENT_URL,
+  'https://triptally.work.gd',
   'http://localhost:5173',
   'http://localhost:3000',
   'http://127.0.0.1:5173',
