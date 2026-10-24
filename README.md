@@ -406,17 +406,25 @@ To test the application end-to-end as an evaluator:
 
 ## 🚢 Production Deployment Guide
 
-### Option A: Full-Stack on Render / Railway
-1. **Database**: Create a free MongoDB database on [MongoDB Atlas](https://www.mongodb.com/atlas). Obtain your connection URI.
-2. **Web Service**: Connect your GitHub repository to Render or Railway.
-3. **Root Directory**: Deploy the `server` directory as the Node.js application:
+### Option A: AWS Deployment (Recommended)
+1. **Database**: Use [MongoDB Atlas](https://www.mongodb.com/atlas) (free M0 cluster or dedicated). Obtain your connection string (`MONGODB_URI`). In MongoDB Atlas Network Access, allow your AWS server IP (or `0.0.0.0/0` with secure user/password).
+2. **Backend API on AWS App Runner / Elastic Beanstalk / EC2**:
+   - Root directory: `server/` (or run containerized via `Dockerfile`)
    - Build Command: `npm install`
-   - Start Command: `npm start`
-4. **Static Site**: Deploy `client` to Vercel or Netlify:
+   - Start Command: `npm start` (runs `node src/server.js` on port `5001` or `PORT`)
+   - Configure Environment Variables: `MONGODB_URI`, `JWT_SECRET`, `CLIENT_URL`, `GEMINI_API_KEY`, etc.
+3. **Frontend on AWS S3 + CloudFront or AWS Amplify**:
+   - Root directory: `client/`
    - Build Command: `npm run build`
    - Output Directory: `dist`
    - Environment Variable: `VITE_API_URL=https://your-api-domain.com/api`
-5. **CORS**: Set `CLIENT_URL=https://your-client-domain.com` in your backend environment variables.
+   - Error document / rewrite rule: Configure `/index.html` as the fallback route for SPA client-side routing.
+4. **CORS**: Set `CLIENT_URL=https://your-frontend-domain.com` in backend environment variables.
+
+### Option B: Full-Stack on Render / Railway
+1. Deploy `server` as a Node web service (`npm start`).
+2. Deploy `client` static build (`dist`) to AWS Amplify, Netlify, or Render Static Site.
+3. Set `CLIENT_URL` on the backend and `VITE_API_URL` on the frontend.
 
 ---
 

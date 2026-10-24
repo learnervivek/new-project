@@ -1,15 +1,14 @@
 /**
  * Dynamically resolves the base URL for the client application.
- * In serverless deployments (such as Vercel), it detects the live deployed URL
- * from incoming request headers (Origin, Referer, Host) or Vercel environment variables,
- * ensuring users receive valid live links instead of hardcoded localhost URLs.
+ * Resolves CLIENT_URL from environment variables or incoming request headers
+ * (Origin, Referer, Host), ensuring users receive valid links.
  *
  * @param {import('express').Request} [req] - Optional Express request object
- * @returns {string} Base URL without trailing slash (e.g. 'https://triptally-yeu6.vercel.app')
+ * @returns {string} Base URL without trailing slash
  */
 export function getClientUrl(req) {
-  // 1. If CLIENT_URL is explicitly set and not localhost when running on Vercel
-  if (process.env.CLIENT_URL && (!process.env.VERCEL || !process.env.CLIENT_URL.includes('localhost'))) {
+  // 1. If CLIENT_URL is explicitly set
+  if (process.env.CLIENT_URL) {
     return process.env.CLIENT_URL.replace(/\/$/, '');
   }
 
@@ -39,16 +38,8 @@ export function getClientUrl(req) {
     }
   }
 
-  // 3. Check Vercel platform environment variables
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`.replace(/\/$/, '');
-  }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`.replace(/\/$/, '');
-  }
-
-  // 4. Default for local development
-  return (process.env.CLIENT_URL || 'http://localhost:5173').replace(/\/$/, '');
+  // 3. Default for local development
+  return 'http://localhost:5173';
 }
 
 export default getClientUrl;

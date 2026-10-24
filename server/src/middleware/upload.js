@@ -15,10 +15,8 @@ function ensureDirectory(dirPath) {
   }
 }
 
-// In serverless environments (Vercel/Lambda), process.cwd() is read-only; use os.tmpdir()
-const baseUploadDir = process.env.VERCEL
-  ? path.join(os.tmpdir(), 'uploads')
-  : path.join(process.cwd(), 'uploads');
+// Base upload directory (configurable via UPLOAD_DIR or defaults to ./uploads)
+const baseUploadDir = process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads');
 
 const receiptsDir = path.join(baseUploadDir, 'receipts');
 const avatarsDir = path.join(baseUploadDir, 'avatars');

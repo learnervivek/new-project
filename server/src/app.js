@@ -21,7 +21,7 @@ dotenv.config();
 
 const app = express();
 
-// Ensure database connection is initialized for serverless environments
+// Ensure database connection is initialized
 app.use(async (req, res, next) => {
   // Health endpoint always responds even if DB is down
   if (req.path === '/health' || req.path === '/api/health' || req.path === '/') {
@@ -35,7 +35,7 @@ app.use(async (req, res, next) => {
     if (process.env.NODE_ENV === 'production') {
       return res.status(503).json({
         success: false,
-        message: `Database connection error: ${err.message}. Please verify MONGODB_URI in Vercel Project Settings -> Environment Variables and ensure MongoDB Atlas Network Access has 0.0.0.0/0 allowed.`,
+        message: `Database connection error: ${err.message}. Please verify MONGODB_URI in your environment variables and ensure MongoDB Atlas Network Access allows your server IP.`,
       });
     }
   }
@@ -56,9 +56,7 @@ app.use(
   },
 
   express.static(
-    process.env.VERCEL
-      ? path.join(path.sep, 'tmp', 'uploads')
-      : path.join(process.cwd(), 'uploads'),
+    process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads'),
     {
       dotfiles: 'ignore',
       index: false,
@@ -73,7 +71,6 @@ app.use(requestLogger);
 // CORS configuration
 const allowedOrigins = [
   process.env.CLIENT_URL,
-  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
   'http://localhost:5173',
   'http://localhost:3000',
   'http://127.0.0.1:5173',
@@ -84,11 +81,6 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (mobile clients, curl, testing tools)
       if (!origin) return callback(null, true);
-
-      // Allow all Vercel preview and production deployments (*.vercel.app)
-      if (origin.endsWith('.vercel.app') || /^https?:\/\/[a-zA-Z0-9_-]+\.vercel\.app$/.test(origin)) {
-        return callback(null, true);
-      }
 
       // Allow configured origins or local development
       if (
