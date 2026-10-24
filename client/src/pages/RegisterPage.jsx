@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -26,7 +26,9 @@ export function RegisterPage() {
   const [loading, setLoading] = useState(false);
 
   const from = location.state?.from
-    ? `${location.state.from.pathname || '/'}${location.state.from.search || ''}`
+    ? (typeof location.state.from === 'string'
+        ? location.state.from
+        : `${location.state.from.pathname || '/'}${location.state.from.search || ''}`)
     : '/dashboard';
 
   const {
@@ -140,7 +142,7 @@ export function RegisterPage() {
           <CardFooter className="bg-ivory-50/50 justify-center py-4 border-t border-ivory-200">
             <p className="text-xs text-charcoal-600">
               Already have an account?{' '}
-              <Link to="/login" className="font-bold text-forest-700 hover:text-forest-900">
+              <Link to="/login" state={location.state} className="font-bold text-forest-700 hover:text-forest-900">
                 Sign in
               </Link>
             </p>

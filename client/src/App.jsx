@@ -16,12 +16,14 @@ import InvitationsPage from './pages/InvitationsPage';
 import NotificationsPage from './pages/NotificationsPage';
 import AiTripPlannerPage from './pages/AiTripPlannerPage';
 import ToastProvider from './context/ToastContext';
+import ErrorBoundary from './components/ui/ErrorBoundary';
 
 import { AuthProvider } from './context/AuthContext';
 
 export function App() {
   return (
-    <ToastProvider>
+    <ErrorBoundary>
+      <ToastProvider>
       <AuthProvider>
         <Routes>
           {/* Public Website Shell */}
@@ -56,6 +58,7 @@ export function App() {
         </Routes>
       </AuthProvider>
     </ToastProvider>
+    </ErrorBoundary>
   );
 }
 

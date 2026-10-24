@@ -21,7 +21,9 @@ export function LoginPage() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const from = location.state?.from
-    ? `${location.state.from.pathname || '/'}${location.state.from.search || ''}`
+    ? (typeof location.state.from === 'string'
+        ? location.state.from
+        : `${location.state.from.pathname || '/'}${location.state.from.search || ''}`)
     : '/dashboard';
 
   const {
