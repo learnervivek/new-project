@@ -1,0 +1,85 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        ivory: {
+          50: '#FDFCF9',
+          100: '#FAF8F5',
+          200: '#F3EFE8',
+          300: '#EAE3D6',
+          400: '#DFD5C4',
+          500: '#CFC2AC',
+        },
+        forest: {
+          50: '#F0F7F4',
+          100: '#DDF0E6',
+          200: '#BCE1CF',
+          300: '#8DC9AE',
+          400: '#4F9E78',
+          500: '#2D6A4F',
+          600: '#1B4332',
+          700: '#143628',
+          800: '#0E291E',
+          900: '#081C15',
+          950: '#040E0A',
+        },
+        charcoal: {
+          50: '#F5F6F6',
+          100: '#E5E8E7',
+          200: '#CDD2D0',
+          300: '#AAB2AF',
+          400: '#7E8985',
+          500: '#5C6763',
+          600: '#454E4A',
+          700: '#353C39',
+          800: '#262B29',
+          900: '#1A1D1C',
+          950: '#101211',
+        },
+        terracotta: {
+          50: '#FDF5F2',
+          100: '#FCE7E2',
+          200: '#F9D1C7',
+          300: '#F3B09F',
+          400: '#E9876E',
+          500: '#E07A5F',
+          600: '#CB5E40',
+          700: '#A9482D',
+          800: '#8A3D27',
+          900: '#713624',
+        },
+        sand: {
+          50: '#FBF9F4',
+          100: '#F5F1E6',
+          200: '#EBE2CD',
+          300: '#DDCFB0',
+          400: '#CCB68E',
+          500: '#BCA073',
+        }
+      },
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+      },
+      boxShadow: {
+        'soft-sm': '0 2px 8px -1px rgba(27, 67, 50, 0.04), 0 1px 3px 0 rgba(27, 67, 50, 0.02)',
+        'soft': '0 6px 20px -2px rgba(27, 67, 50, 0.06), 0 2px 6px -1px rgba(27, 67, 50, 0.03)',
+        'soft-lg': '0 12px 36px -4px rgba(27, 67, 50, 0.08), 0 4px 12px -2px rgba(27, 67, 50, 0.04)',
+        'soft-xl': '0 24px 56px -8px rgba(27, 67, 50, 0.12), 0 8px 24px -3px rgba(27, 67, 50, 0.06)',
+        'forest-glow': '0 0 24px -2px rgba(27, 67, 50, 0.35)',
+        'terracotta-glow': '0 0 24px -2px rgba(224, 122, 95, 0.35)',
+      },
+      borderRadius: {
+        '2xl': '1rem',
+        '3xl': '1.5rem',
+      },
+    },
+  },
+  plugins: [],
+}
